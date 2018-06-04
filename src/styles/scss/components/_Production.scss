@@ -1,0 +1,21 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  td,th {
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  th {
+    background: #000;
+    color: #fff;
+  }
+  tbody {
+    tr {
+      &:nth-child(2n) {
+        background: #eee;
+      }
+    }
+  }
+}

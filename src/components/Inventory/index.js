@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { match, countBy, map, trim, compose, split, isEmpty } from 'ramda';
+import SearchAPI from '../../api/search';
 
 import { updateInventory } from '../../actions/inventoryActions';
 
@@ -75,16 +76,6 @@ class Inventory extends Component {
 
     console.log('invent', inventionMaterialsCount);
 
-    if(t2BpcCount !== undefined) {
-      Object.keys(t2BpcCount).forEach((key) => {
-        const item = {
-          name: key,
-          qty: t2BpcCount[key]
-        };
-        inventory.t2Bpc.push(item);
-      });
-    }
-
     if(t1BpcCount !== undefined) {
       Object.keys(t1BpcCount).forEach((key) => {
         const item = {
@@ -115,8 +106,37 @@ class Inventory extends Component {
       });
     }
 
-    this.props.updateInventory(inventory);
-    
+    if(t2BpcCount !== undefined) {
+      const promises = [];
+      const keyMap = [];
+      Object.keys(t2BpcCount).forEach((key) => {
+
+        // const item = {
+        //   name: key,
+        //   qty: t2BpcCount[key]
+        // };
+        keyMap.push(key);
+        promises.push(SearchAPI.searchEve(key));
+        // inventory.t2Bpc.push(item);
+      });
+
+      Promise.all(promises)
+        .then(res => { 
+          const bpc = res.map((value, index) => {
+            return {
+              name: keyMap[index],
+              qty: t2BpcCount[keyMap[index]],
+              type_id: value.data.inventory_type[0]
+            }
+          })
+          inventory.t2Bpc = bpc;
+          this.props.updateInventory(inventory);
+          
+        })
+        .catch(e => { console.error(e) });
+      
+    }
+
   }
 
   render() {
@@ -153,6 +173,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateInventory: inventory => {
     dispatch(updateInventory(inventory));
+    dispatch
   }
 });
 

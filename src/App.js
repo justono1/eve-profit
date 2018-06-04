@@ -10,6 +10,7 @@ import {
 import Nav from './components/Nav';
 import Inventory from './components/Inventory';
 import Production from './components/Production';
+import Market from './components/Market';
 
 const store = makeStore();
 
@@ -22,6 +23,7 @@ class App extends Component {
           <Nav />
           <main>
             <Route exact path='/' component={Production} />
+            <Route path='/market' component={Market} />
             <Route path='/inventory' component={Inventory} />
           </main>
         </div>

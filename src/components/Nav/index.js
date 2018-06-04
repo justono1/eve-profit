@@ -7,6 +7,7 @@ class Nav extends Component {
       <nav>
         <ul>
           <li><Link to="/">Production</Link></li>
+          <li><Link to="/market">Market</Link></li>
           <li><Link to="/inventory">Inventory</Link></li>
         </ul>
       </nav>

@@ -17,4 +17,29 @@ body {
 main {
   padding: 2rem; }
 
+nav {
+  text-align: center;
+  padding: 20px 0; }
+  nav ul {
+    margin: 0;
+    padding: 0; }
+    nav ul li {
+      display: inline-block; }
+      nav ul li a {
+        padding: 15px; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px; }
+  table td, table th {
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 10px; }
+  table th {
+    background: #000;
+    color: #fff; }
+  table tbody tr:nth-child(2n) {
+    background: #eee; }
+
 /*# sourceMappingURL=index.css.map */
