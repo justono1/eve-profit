@@ -136,7 +136,7 @@ export default {
         return Promise.all(promises);
       })
       .then(res => {
-        console.log('promisall', res);
+        // console.log('promisall', res);
 
         const materialsRes = res.slice(1);
         materialsRes.forEach((mat, index) => {
@@ -152,7 +152,7 @@ export default {
 
         // =
         lowestRigPrice = res[0].data[0].price;
-        console.log(lowestRigPrice);
+        // console.log(lowestRigPrice);
         res[0].data.forEach(value => {
           if(value.price < lowestRigPrice) {
             lowestRigPrice = value.price
@@ -172,7 +172,7 @@ export default {
         return {
           rigSalePrice: lowestRigPrice,
           rigMarketVolume: volume,
-          rigBaseMaterialCost: materialBaseCost
+          rigBaseMaterialCost: materialBaseCost,
         }
       })
       .catch(error => {

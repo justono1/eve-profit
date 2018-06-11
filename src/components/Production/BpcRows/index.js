@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import MarketAPI from '../../../api/market';
+import BpcCell from './BpcCell';
 
 class BpcRows extends Component {
   constructor(props) {
@@ -10,32 +11,21 @@ class BpcRows extends Component {
     this.buildRows = this.buildRows.bind(this);
   }
 
-  componentDidMount() {
-    console.log('mount', this.props.t2Bpc.type_id);
-    MarketAPI.getRigDataFromBpc('Large Anti-EM Pump II Blueprint', 26287)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
+  
 
   buildRows() {
     if(this.props.t2Bpc !== undefined) {
       const rows = this.props.t2Bpc.map((bpc) => {
+
+        const t1bpc = this.props.inventory.t1Bpc.find(obj => {
+          return obj.name === bpc.name.replace('II', 'I');
+        });
+
+
         return(
-          <tr key={bpc.name}>
-            <td>{bpc.name} | {bpc.type_id}</td>
-            <td><input type="text" name="inventionRuns" /></td>
-            <td><input type="text" name="productionRuns" /></td>
-            <td>24.4</td>
-            <td>10%</td>
-            <td>24.5</td>
-            <td>10%</td>
-            <td>{bpc.qty}</td>
-            <td>3</td>
-          </tr>
+          // <tr key={bpc.name}>
+            <BpcCell key={bpc.name} name={bpc.name} typeId={bpc.type_id} t2bpcQty={bpc.qty} t1bpcQty={t1bpc.qty} />
+          // </tr>
         );
       });
 
@@ -60,4 +50,11 @@ class BpcRows extends Component {
   }
 }
 
-export default BpcRows;
+const mapStateToProps = (state) => ({
+  inventory: state.inventory
+});
+
+export default connect(
+  mapStateToProps,
+  // mapDispatchToProps
+)(BpcRows);
