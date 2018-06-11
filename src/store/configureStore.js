@@ -93,7 +93,7 @@ const initialState = {
   market: [
     {
       name: 'Large Anti-EM Pump II',
-      qty: 6,
+      qty: 2,
       type_id: 26287
     },
     {
